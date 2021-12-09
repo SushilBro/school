@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_student_kanban">
+        <field name="name">school.student.kanban</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="reference" />
+                <field name="first_name"/>
+                <field name="last_name" />
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="clas"/>
+                <field name="section" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <field name="image" widget="image" class="oe_avatar" />
+                                    </li>
+                                    <li>
+                                        First Name: <field name="first_name" />
+                                    </li>
+                                    <li>
+                                        Student Id: <field name="reference" />
+                                    </li>
+                                    <li>
+                                       Class: <field name="clas" />
+                                    </li>
+                                    <li>
+                                        Age: <field name="age" />
+                                    </li>
+                                    <li>
+                                       Gender: <field name="gender" />
+                                    </li>
+                                    <li>
+                                       Section: <field name="section" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">school.student</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reference" />
+                <field name="first_name"/>
+                <field name="last_name" />
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="clas"/>
+                <field name="section" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_student_search" model="ir.ui.view">
+        <field name="name">school.student.search</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <search string="search students">
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <separator/>
+                <filter name="male" string="Male" domain="[('gender','=','male')]"/>
+                <filter name="female" string="Female" domain="[('gender','=','female')]"/>
+                <filter name="others" string="Others" domain="[('gender','=','others')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Gender" name="gender" context="{'group_by':'gender'}"/>
+                    <filter string="Class" name="clas" context="{'group_by':'clas'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">school.student.form</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Print" name="action_print" type="object"/>
+                    <button string="Print Excel" name="action_print_excel" type="object"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" />
+                        </h1>
+                    </div>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="first_name" />
+                        </group>
+                        <group colspan="2">
+                            <field name="middle_name" />
+                        </group>
+                        <group colspan="2">
+                            <field name="last_name" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="age" />
+                            <field name="clas" />
+                        </group>
+                        <group >
+                            <field name="gender" />
+                            <field name="section" />
+                        </group>
+                    </group>
+                    <p>Permanent Address</p>
+                    <group >
+                        <group>
+                            <field name="P_address" />
+                            <field name="P_first_street_name" />
+                            <field name="P_second_street_name" />
+                            <field name="P_country" />
+                        </group>
+                        <group>
+
+                            <field name="P_palika" />
+                            <field name="P_district" />
+                            <field name="P_state" />
+
+                            <field name="zip_code" />
+                        </group>
+                    </group>
+                    <p>Temporary Address</p>
+
+                    <group >
+                        <group>
+                            <field name="T_address" />
+                            <field name="T_first_street_name" />
+                            <field name="T_second_street_name" />
+                        </group>
+                        <group>
+                            <field name="T_palika" />
+                            <field name="T_district" />
+                            <field name="T_state" />
+                        </group>
+                    </group>
+                    <group >
+                        <!-- <input type="checkbox" string="Same as Permanent" name="check"/> -->
+                        <field name="check_address" />
+                    </group>
+                    <notebook>
+                        <page name="parents_description" string="Parents Descripition">
+                            <group>
+                                <group >
+                                    <field name="parents_fullname" />
+                                    <field name="phone_number" />
+                                </group>
+                                <group>
+                                    <field name="address" />
+                                </group>
+                            </group>
+                        </page>
+                        <page name="guardians_description" string="Guardians Descripition">
+                            <group>
+                                <group >
+                                    <field name="guardians_fullname" />
+                                    <field name="guardinas_phone_number" />
+                                </group>
+                                <group>
+                                    <field name="guardinas_address" />
+                                    <field name="dob" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_students_information" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'search_default_clas':1}</field>
+        <field name="help" type="html">
+            <p>
+                Create your first student!
+            </p>
+        </field>
+    </record>
+
+    <record id="action_class_conf" model="ir.actions.act_window">
+        <field name="name">Class</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.class</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <!-- <field name="context">{'search_default_male':1,'search_default_responsible_id':1}</field> -->
+        <field name="help" type="html">
+            <p>
+                Configure Class !
+            </p>
+        </field>
+    </record>
+
+    <record id="action_section_conf" model="ir.actions.act_window">
+        <field name="name">Section</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.section</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <!-- <field name="context">{'search_default_male':1,'search_default_responsible_id':1}</field> -->
+        <field name="help" type="html">
+            <p>
+                Configure Section !
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_school_root" name="School" sequence="10"/>
+    <menuitem id="menu_student_root" name="Students" parent="menu_school_root" sequence="10"/>
+    <menuitem id="menu_students_information" name="Student Information" parent="menu_student_root" action="action_students_information" sequence="10"/>
+
+    <menuitem id="menu_conf" name="Configure" parent="menu_school_root" sequence="20"/>
+    <menuitem id="menu_class_conf" name="Class Configure" parent="menu_conf" action="action_class_conf" sequence="10"/>
+    <menuitem id="menu_section_conf" name="Section Configure" parent="menu_conf" action="action_section_conf" sequence="20"/>
+
+</odoo>
